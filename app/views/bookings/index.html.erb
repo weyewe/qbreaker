@@ -1,0 +1,158 @@
+<div class="padded" style='overflow-x:scroll;'>
+  
+  
+    <%= render :partial => "layouts/new_object_opener", :locals => {
+      :text => "New Queue"
+    } %>
+  
+  
+   
+  <% if @objects.length == 0 %>
+    <%= render :partial => "layouts/no_object_list", :locals => {
+      :objects => "queues",
+      :single_object => "queue" , 
+      :subject => "company"
+    } %>
+  <% end %>
+   
+   
+    <%= render :partial => "bookings/new_object_form", :locals => {
+      :new_object => @new_object,
+      :url => bookings_url   
+    }%>
+ 
+ 
+ 
+  
+  
+  
+    
+    <table class="table table-bordered table-striped table-header <%= show_table?( @objects )%>" id="object_list">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Seat</th>
+          <th>Quantity</th>
+          <th>Time</th>
+          <th>Code</th> 
+          <th>Status</th> 
+          <th colspan='3' style='text-align:center;'>Action</th> 
+        </tr>
+      </thead>
+      <tbody id="package_list">
+        <% @objects.each do |object| %>
+          <%= render :partial => "bookings/object_list_entry", :locals => {
+            :object => object 
+          }%>
+        
+        <% end %> 
+      </tbody>
+    </table>
+</div>
+
+
+<div class=" hidden" id="form_submit_action">
+  <%= form_for Booking.new, :url => ''   do |f| %>
+    <%= hidden_field_tag 'entity_id' , ''  %> 
+  <% end %>
+</div>
+
+<script src="http://js.pusher.com/1.12/pusher.min.js"></script>
+ 
+
+<script type="text/javascript">
+  var channel_code = '<%= Office.first.channel_code %>';
+  // alert("This is me, channel_code: " + channel_code);
+  Pusher.log = function(message) {
+    if (window.console && window.console.log) window.console.log(message);
+  };
+  var pusher = new Pusher('<%= Pusher.key %>'); // uses your API KEY
+  
+  
+  var channel = pusher.subscribe(channel_code);
+  // channel.bind('greet', function(data) {
+  //   // alert(data.greeting);
+  //   awesomeShite();
+  // });
+  channel.bind('refresh_row', function(pusher_data) {
+    // alert("The row is refreshed");
+    refreshRow(pusher_data);
+  });
+  
+  // alert("Gonna call the document ready");
+  
+  //   
+  // function awesomeShite(){
+  //   alert("awesome shite is called");
+  // }
+  // 
+  function refreshRow(pusher_data){
+    var $row = $("#object_list_entry-" + pusher_data.object_id ); 
+  
+    if($row.length != 0 ){
+      $row.showLoading(); 
+    } 
+  
+    $.ajax({
+      url: '<%= refresh_booking_queue_row_url %>' ,
+      type: "POST",
+      data: pusher_data,
+      dataType: 'script',
+      success: function(response){ 
+      }
+    }); 
+  }
+/*
+var view = {
+  title: "Joe",
+  calc: function () {
+    return 2 + 4;
+  }
+};
+
+var output = Mustache.render("{{title}} spends {{calc}}", view);
+
+if( respond_data.closed == true  ||  respond_data.canceled == true){
+	if($row.length == 0 ){
+	// do nothing
+	}else{
+		$row.remove();
+	}
+}else{
+
+
+	var template = "<tr id='object_list_entry-{{object_id}}' class='entry'>" + 
+				"<td>{{name}}</td>" + 
+				"<td>{{seat_category}}</td>" + 
+				"<td>{{number_of_people}}</td>" + 
+				"<td>{{booking_time}}</td>" + 
+				"<td>{{booking_code}}</td>" + 
+				"<td>"  + 
+						"{{#pending_confirmation_sms}}
+							<span class="label">Confirming</span>   
+						{{/pending_confirmation_sms}}"  +  
+						"{{#pending_seat}}
+							<span class="label blue">Wait</span>  
+						{{/pending_seat}}"  +
+						"{{#seat_ready}}
+							<span class="label green">Ready</span> 
+						{{/seat_ready}}"   +
+				"</td>" + 
+				"</tr>"
+	
+	var output = Mustache.render( template , respond_data);
+	
+	if($row.length == 0 ){
+		$("#object_list").prepend(output);
+	}else{
+		$row.replaceWith(output);
+	}
+	
+}
+ 
+*/
+</script>
+
+
+

@@ -1,0 +1,26 @@
+$(document).ready(function(){ 
+  var $row = $("#object_list_entry-<%= @object.id %>");
+  <% new_row = escape_javascript(  render :partial => "bookings/object_list_entry", :locals => { 
+    :object => @object
+    }) %>
+    
+  if($row.length != 0){
+    $row.hideLoading();
+    <% if @object.is_active? %>
+      $row.replaceWith('<%=  new_row %>'); 
+    <% else %>
+      $row.remove(); 
+    <% end %>
+  }else{
+    
+    <% if @object.is_active? %>
+      $("#package_list").prepend('<%= new_row %>');
+    <% else %>
+      $row.remove(); 
+    <% end %>
+    
+    
+    
+  }
+    
+});

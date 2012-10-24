@@ -1,0 +1,19 @@
+<%= render "projects/management/heading", title: "Post Production", :id => "post_production" %>
+
+<div class="padded">
+  
+  <div class="row"> 
+    <div class='span8' id="package_detail_wrapper">
+    
+        
+      <% @deliverable_items.each do |deliverable_item| %>
+        <%= render :partial => "projects/deliverable_item_post_production_progress", :locals => {
+          :deliverable_item => deliverable_item 
+        }%>
+        
+      <% end %>
+    </div> 
+  </div>
+  
+  
+</div>

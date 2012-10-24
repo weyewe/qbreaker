@@ -1,0 +1,29 @@
+<%= simple_form_for( new_object, :url => url,
+      :method => :post , 
+      :html => {:class => "form-horizontal prevent_double_submit ajax-form   no_content_form",
+        :id => "new_object"}) do |f| %>
+
+  <%= f.input :name  , :input_html => {:class => "input-xlarge span5"}, 
+  :label => "Name" %>
+  
+  <%= f.input :phone_number  , :input_html => {:class => "input-xlarge span5"}, 
+  :label => "Phone Number" , :hint => "Use international format! <b>0</b> 812 255 73759 is saved as <b>+62</b> 812 255 73759"%>
+  
+  
+  <hr />
+  
+  <%= f.input :seat_category_id,   :label => "Seat Category" do %>
+     <%= f.select :seat_category_id, 
+         SeatCategory.all_selectable_packages %>
+   <% end %>
+   
+    
+   <%= f.input :number_of_people  , :input_html => {:class => "input-xlarge span5"}, 
+   :label => "Number of Guests" %>
+    
+  
+
+  <div class="form-actions">
+    <%= f.button :submit , :class => "btn btn-primary", :value=> "Create Queue" %>
+  </div>
+<% end %>

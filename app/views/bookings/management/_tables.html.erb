@@ -1,0 +1,28 @@
+<table class="table table-bordered table-striped table-header">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>PM</th>
+      <th>MainCrew</th>
+      <th>Crew</th>
+      <th>AE</th>
+      <th>QC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @project.users.each do |user| %>
+      <%= render :partial => "projects/project_assignment_entry", :locals => {
+        :project => @project,
+        :employee => user ,
+        :main_crew =>    @main_crew_project_role ,
+        :crew =>    @crew_project_role ,
+        :pm =>    @pm_project_role ,
+        :ae =>    @ae_project_role ,
+        :prod =>    @prod_project_role , 
+        :post_prod =>    @post_prod_project_role ,
+        :qc =>    @qc_project_role  
+      }%>
+    <% end %> 
+   
+  </tbody>
+</table>

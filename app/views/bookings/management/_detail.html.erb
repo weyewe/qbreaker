@@ -1,0 +1,33 @@
+<div class="padded" class='section_wrapper'>
+
+   
+  
+    <div class="row"> 
+      <div class='span7' id="project_detail_wrapper">
+        <% if current_user.has_role?(:head_project_manager)%>
+          <%= render :partial => "projects/edit_object_form", :locals => {
+            :object => @project, 
+            :url => project_url(@project),
+            :id => 'edit_project_detail'
+          }%>
+        <% end %>
+        
+        
+        <%= render :partial => "projects/project_detail", :locals => {
+          :project => @project 
+        }%>
+        
+        
+      </div>
+      <div class='span1'>
+        <% if current_user.has_role?(:head_project_manager)%>
+          <button  class="btn blue edit_form_opener" data-toggle="button" style="width:100%; text-align:center;">Edit</button>
+        <% else %>
+          <span class="label blue">Head Project Manager</span>
+        <% end %>
+      </div>
+    </div>
+  
+  
+   
+</div>

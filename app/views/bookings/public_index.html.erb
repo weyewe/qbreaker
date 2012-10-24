@@ -1,0 +1,83 @@
+<div class="padded" style='overflow-x:scroll;'>
+  
+    
+ 
+  
+  
+  
+    
+    <table class="table table-bordered table-striped table-header" id="object_list">
+      <thead>
+        <tr>
+          <th>Name</th> 
+          <th>Seat</th>
+          <th>Quantity</th>
+          <th>Time</th> 
+          <th>Code</th>
+          <th>Status</th>  
+        </tr>
+      </thead>
+      <tbody id="package_list">
+        <% @objects.each do |object| %>
+          <%= render :partial => "bookings/public_object_list_entry", :locals => {
+            :object => object 
+          }%>
+        
+        <% end %> 
+      </tbody>
+    </table>
+</div>
+
+
+<div class=" hidden" id="form_submit_action">
+  <%= form_for Booking.new, :url => ''   do |f| %>
+    <%= hidden_field_tag 'entity_id' , ''  %> 
+  <% end %>
+</div>
+
+<script src="http://js.pusher.com/1.12/pusher.min.js"></script>
+ 
+
+<script type="text/javascript">
+  var channel_code = '<%= Office.first.channel_code %>';
+  // alert("This is me, channel_code: " + channel_code);
+  Pusher.log = function(message) {
+    if (window.console && window.console.log) window.console.log(message);
+  };
+  var pusher = new Pusher('<%= Pusher.key %>'); // uses your API KEY
+  
+  
+  var channel = pusher.subscribe(channel_code);
+  // channel.bind('greet', function(data) {
+  //   // alert(data.greeting);
+  //   awesomeShite();
+  // });
+  channel.bind('refresh_row', function(pusher_data) {
+    // alert("The row is refreshed");
+    refreshRow(pusher_data);
+  });
+  
+  // alert("Gonna call the document ready");
+  
+  //   
+  // function awesomeShite(){
+  //   alert("awesome shite is called");
+  // }
+  // 
+  function refreshRow(pusher_data){
+    var $row = $("#object_list_entry-" + pusher_data.object_id ); 
+  
+    if($row.length != 0 ){
+      $row.showLoading(); 
+    } 
+  
+    $.ajax({
+      url: '<%= refresh_public_booking_queue_row_url %>' ,
+      type: "POST",
+      data: pusher_data,
+      dataType: 'script',
+      success: function(response){ 
+      }
+    }); 
+  }
+</script>

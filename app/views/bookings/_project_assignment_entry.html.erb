@@ -1,0 +1,46 @@
+
+
+<tr id="role_assignment_entry-<%= employee.id %>">
+  <td><b><%= employee.name %></b></td>
+  
+  <td> 
+    <% if employee.has_project_role?(project, main_crew ) %>
+      <span class="label green"> Yes</span>
+    <% else %>
+      <span class="label"> No</span>
+    <% end %>
+  </td>
+  
+  <td> 
+    <% if employee.has_project_role?(project, crew ) %>
+      <span class="label green"> Yes</span>
+    <% else %>
+      <span class="label"> No</span>
+    <% end %>
+  </td>
+  
+  <td> 
+    <% if employee.has_project_role?(project, pm ) %>
+      <span class="label green"> Yes</span>
+    <% else %>
+      <span class="label"> No</span>
+    <% end %>
+  </td>
+  
+  <td> 
+    <% if employee.has_project_role?(project, ae ) %>
+      <span class="label green"> Yes</span>
+    <% else %>
+      <span class="label"> No</span>
+    <% end %>
+  </td>
+  
+  
+  <td> 
+    <% if employee.has_project_role?(project, qc ) %>
+      <span class="label green"> Yes</span>
+    <% else %>
+      <span class="label"> No</span>
+    <% end %>
+  </td>
+</tr>

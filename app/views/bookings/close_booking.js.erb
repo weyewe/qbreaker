@@ -1,0 +1,8 @@
+$(document).ready(function(){
+  <% if @booking.booking_status == BOOKING_STATUS[:closed] %>
+    var $row = $("#object_list_entry-<%= @booking.id %>");
+    $row.hideLoading(); 
+
+    $row.remove(); 
+  <% end %> 
+});

@@ -1,0 +1,24 @@
+<div class="mid-container wrapper">
+  <h1 class="title">Sign In</h1>
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <ul class="fields">
+      <li>
+        <i class="icon-user"></i>
+        <%= f.text_field :email  , placeholder: "email", autocomplete: "off" %>
+      </li>
+      <li>
+        <i class="icon-key"></i>
+        <%= f.password_field :password , placeholder: "password", autocomplete: "off" %>
+      </li>
+    </ul>
+   
+
+    <div class="mid-form">  
+      <%= f.submit   "Sign In", :class => "btn blue large pull-right"  %>
+    </div>
+  <% end %>
+</div>
+
+<%#= render "devise/shared/links" %>
+ 
+ 

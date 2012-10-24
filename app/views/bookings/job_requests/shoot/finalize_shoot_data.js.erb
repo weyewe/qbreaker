@@ -1,0 +1,22 @@
+$(document).ready(function(){
+  
+  
+  $("#finalizer").hideLoading();
+  <% if @project.is_shoot_finalized == true %>
+    <% new_notification = escape_javascript(render :partial => "projects/job_requests/shoot/shoot_finalized", 
+      :locals => {
+      :project => @project 
+    }) %>
+    
+    $("#finalizer").replaceWith('<%= new_notification %>' );
+  <% else %>
+   
+    <% new_form = escape_javascript(render :partial => "projects/job_requests/shoot/finalize_shoot", 
+      :locals => {
+      :project => @project 
+    }) %>
+    
+    $("#finalizer").replaceWith('<%= new_form %>' );
+  <% end %>
+  
+});

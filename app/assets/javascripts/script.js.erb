@@ -1,0 +1,338 @@
+
+/* All ajax requests are sending authenticty token*/
+$(document).ajaxSend(function(event, request, settings) {
+  if (typeof(AUTH_TOKEN) == "undefined") return;
+  // settings.data is a serialized string like "foo=bar&baz=boink" (or null)
+  settings.data = settings.data || "";
+  settings.data += (settings.data ? "&" : "") + "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
+});
+
+ 
+
+
+$(document).ready(function(){
+  
+  $(".datepicker").datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose : true 
+  });
+  
+  jQuery('.prevent_double_submit').preventDoubleSubmit();
+  
+  $(".form_opener").click(function(){
+    //  open the form 
+    $("form.no_content_form").toggle();
+    
+    // hide the no_object_list notification 
+    $("#no_object_list").toggle();
+    
+    // if it is the edit mode 
+    $("#display_content").toggle() ;
+    
+    $("#new_object").clearForm();
+    return false;
+  });
+  
+  $(".edit_form_opener").click(function(){
+    var $section_wrapper = $(this).parents(".row");
+    //  open the form 
+    $("form.edit_form_opener", $section_wrapper).toggle();
+    
+    // hide the no_object_list notification 
+    $(".form_content", $section_wrapper).toggle();
+    
+    
+    
+    return false;
+    
+    
+  });
+   
+  
+  
+  
+  $(".ajax-form").live("submit", function(){
+    var $form = $(this);  
+    $form.showLoading();
+
+    $.ajax({
+      url: $form.attr("action"),
+      type: "POST",
+      data: $form.serialize(),
+      dataType: 'script',
+      success: function(response){
+        // 
+        // $form.clearForm();
+        // $entry_link.hideLoading();
+      }
+    });
+    
+    return false ; 
+  });
+  
+  
+  $(".default-hidden-toggler").click(function(){
+    $("form.form-toggler").toggle();
+    return false;
+  });
+  
+  $("#loading_uploader_notification").fadeOut();
+  $("#upload_picture").fadeIn();
+  
+  $(".entry-link").click(function(){
+    var $entry_link = $(this);
+    
+    
+    var text = "" ; 
+    if( $entry_link.hasClass("entry-closer")){
+      text = "Are you sure?"
+    }else if ($entry_link.hasClass("entry-recover")){
+      text = "Are you sure?"
+    }
+    
+    if( confirm( text ) ){
+      var entry_id = $(this).attr('id').split("_")[1];
+
+      var $form = $("#close-entry form");
+      var $input_entry_id = $("#entry_id");
+
+      $input_entry_id.attr("value", entry_id );
+      
+      $entry_link.showLoading();
+
+      $.ajax({
+        url: $form.attr("action"),
+        type: "POST",
+        data: $form.serialize(),
+        dataType: 'script',
+        success: function(response){
+
+          $form.clearForm();
+          $entry_link.hideLoading();
+        }
+      });
+    }
+    
+    return false;
+  });
+  
+  
+  
+  // assignment related methods 
+  $(".checkbox_tracker").live( 'change', function(){
+    var $checkbox = $(this);
+    var after_clicked_value;
+  
+    /*
+      Extracting the value of the checkbox, based on the user action
+    */
+    if(   $checkbox.is(":checked")  ) {
+      $checkbox.attr('value', <%= TRUE_CHECK %>);
+      after_clicked_value = <%= TRUE_CHECK %>;
+    }else{
+      $checkbox.attr( 'value', <%= FALSE_CHECK %> );
+       after_clicked_value = <%= FALSE_CHECK %>;
+    }
+  
+  
+    var checkbox_id = $checkbox.attr("id");
+    var provider_id = checkbox_id.split("-")[0].split("_")[1];
+    var consumer_id = checkbox_id.split("-")[1].split("_")[1];
+  
+    var $form = $("#checkbox_form_wrapper form");
+  
+    var provider_field = $("#membership_provider");
+    provider_field.attr('value', provider_id);
+    var consumer_field = $("#membership_consumer");
+    consumer_field.attr('value', consumer_id);
+  
+    var decision_field = $("#membership_decision");
+    decision_field.attr("value", after_clicked_value )
+  
+    if($checkbox.hasClass("single-submit")){
+      $form.trigger('submit');
+    }else {
+      $checkbox.showLoading();
+  
+      $.ajax({
+        url: $form.attr("action"),
+        type: "POST",
+        data: $form.serialize(),
+        dataType: 'script',
+        success: function(response){
+          $form.clearForm();
+          $checkbox.hideLoading();
+        }
+      });
+    }
+  });
+  
+  /*
+     Propose Button
+   */
+  $(".action").live('click', function(){
+    var $this  = $(this);
+    var entity_id = $this.attr("id").split("-")[1];
+    var action_role ;
+    var action_value = -1 ; // if we are in the action role proposer, we won't even look at the action 
+    
+    if( $this.hasClass("propose")){
+      action_role = <%= PROPOSER_ROLE %>;
+      if($this.hasClass("true_check")){
+         action_value = <%= TRUE_CHECK %>;
+       }else{
+         action_value = <%= FALSE_CHECK %>;
+       }
+    }else if( $this.hasClass("approve") ){
+      action_role = <%= APPROVER_ROLE %>;
+      //  approver can approve or reject.. if it is FALSE_CHECK -> reject action. vice versa
+      if($this.hasClass("true_check")){
+        action_value = <%= TRUE_CHECK %>;
+      }else{
+        action_value = <%= FALSE_CHECK %>;
+      }
+    }
+    
+    var $form = $("#approve_propose_form_wrapper form");
+    var $entity_id_field = $("#entity_id") ;
+    var $action_role_field = $("#action_role") ;
+    var $action_field = $("#action_value");
+    
+    $entity_id_field.attr("value", entity_id);
+    $action_role_field.attr("value",action_role );
+    
+    $action_field.attr("value", action_value);
+    // console.log("The action value is " + action_value);
+    if( confirm("Are you sure?") ){
+      $this.showLoading(); 
+  
+      $.ajax({
+        url: $form.attr("action"),
+        type: "POST",
+        data: $form.serialize(),
+        dataType: 'script',
+        success: function(response){
+          $form.clearForm();
+          $this.hideLoading();
+        }
+      });
+    }
+    
+    return false;
+  });
+   
+   
+  /*
+  Component status form opener  
+  */
+  $("a.component_status_form_opener").live('click',function(){
+    var id_text = $(this).attr("id");
+    var component_status_id = id_text.split('-')[1];
+    
+    $("#component_status_nav_wrapper-"+component_status_id ).hide();
+    // $("#new_object" ).clearForm();
+    $("#form_component_status-" +component_status_id ).show();
+    
+    return false;
+  });
+  
+  $("a.component_status_form_closer").live('click',function(){
+    var id_text = $(this).attr("id");
+    var component_status_id = id_text.split('-')[1];
+    
+    $("#component_status_nav_wrapper-"+component_status_id ).show();
+    $("#form_component_status-" +component_status_id ).hide();
+    
+    return false;
+  });
+  
+  $("form.update_spare_part_form").live("submit", function(){
+    var $this  = $(this);
+    $this.showLoading(); 
+    $.ajax({
+      url: $this.attr('action'),
+      type: "POST",
+      data: $this.serialize(),
+      dataType: 'script',
+      success: function(response){
+         $this.hideLoading();
+      }
+    });
+    
+    return false;
+  });
+  
+  
+  /*
+  Edit model trigger
+  */
+  $(".modal_trigger").live("click", function(){
+    var $this = $(this); 
+    var action_url = $this.attr("href");
+    var $form = $("#edit_form");
+    
+    
+    var $entry_wrapper =  $this.parents("tr");
+    // var current_part_code = $("td.part_code", $entry_wrapper).text();
+    var current_email = $("td.email", $entry_wrapper).text();
+    var current_price =$("td.price", $entry_wrapper).text();
+    
+    $(".edit_model").show();
+    $("#modal_notification").hide();
+    $form.attr("action", action_url);
+    
+    // var header_text = $(".header_text", $entry_wrapper).text();
+    summonModalEdit("Edit: " + current_email, "myModal");
+    
+    // $("#current_part_code").attr('value', current_part_code );
+    $("#current_price").attr( 'value', current_price );
+    
+     
+    return false ;
+  });
+  
+  $(".edit_model").live("submit", function(){
+    var  $form = $(this);
+    
+    
+    $form.showLoading(); 
+    $.ajax({
+      url: $form.attr("action"),
+      type: "POST",
+      data: $form.serialize(),
+      dataType: 'script',
+      success: function(response){
+         $form.hideLoading();
+         $form.clearForm();
+      }
+    });
+    
+    return false; 
+  });
+  
+   // specific on the booking
+  $(".variable_url_submit").live('click', function(){
+    var link_url = $(this).attr("href");
+    var $form = $("#form_submit_action form");
+    var $row = $(this).parents("tr.entry");
+    var entity_id = $row.attr("id").split("-")[1];
+    $("#entity_id").attr("value", entity_id );
+    
+    $row.showLoading(); 
+    $.ajax({
+      url: link_url,
+      type: "POST",
+      data: $form.serialize(),
+      dataType: 'script',
+      success: function(response){
+         $row.hideLoading();
+         $form.clearForm();
+      }
+    });
+    
+    return false;
+    
+  });
+ 
+});
+

@@ -1,0 +1,44 @@
+<tr id="object_list_entry-<%= object.id %>" class='entry'> 
+  <!-- Title -->
+  <td>
+    <%=    object.name   %>
+  </td>
+   
+  
+  <!-- Deliverables -->
+  <td> 
+    <%= object.seat_category.name %>
+  </td>
+  
+  <!-- Project Memberships -->
+  <td>  
+    <%= object.number_of_people  %> 
+  </td>
+  
+  <td>
+    <%= object.created_at.hour %>:<%= object.created_at.min %>
+  </td>
+  
+  <td> 
+    <%= object.booking_code %> 
+  </td>
+ 
+   
+   
+  <td> 
+    <% case object.booking_status %>
+    <% when BOOKING_STATUS[:pending_confirmation_sms] %>
+      <span class="label">Confirming</span>   
+    <% when BOOKING_STATUS[:pending_seat] %> 
+      <span class="label blue">Wait</span>  
+    <% when BOOKING_STATUS[:seat_ready] %> 
+      <span class="label green">Ready</span> 
+    <% when BOOKING_STATUS[:closed] %> 
+      <span class="label yellow">Closed</span> 
+    <% when BOOKING_STATUS[:canceled] %> 
+      <span class="label red">Canceled</span>
+    <% else %>
+      <span class="label yellow">..</span>
+    <% end %>
+  </td> 
+</tr>

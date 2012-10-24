@@ -1,0 +1,61 @@
+$(document).ready(function(){
+  var $form = $("#new_object");  
+  <% new_form = escape_javascript(  render :partial => "bookings/new_object_form", :locals => {
+            :new_object => @new_object,
+            :url => bookings_url  
+          }) %>
+  
+  //  hide showLoading 
+  $form.hideLoading();  
+  $form.replaceWith('<%= new_form %>');  
+  var $form = $("#new_object");  
+  
+  // show the alert (either success or fail)
+  var $form_opener = $("#new_object_opener");
+   
+  <% if @new_object.persisted? %>
+  // show notification that it is persisted
+    <% alert = escape_javascript(render :partial => "layouts/alert", :locals => {
+      :success => true , 
+      :text => "#{@new_object.name}'s booking is successfully created."
+    }) %>
+  //  hide the form 
+    $form.hide(); 
+    $form.clearForm(); 
+  // add the entry into the table 
+  
+    <% new_row = escape_javascript(  render :partial => "bookings/object_list_entry", :locals => { 
+              :object => @new_object
+            }) %>
+          
+    $("#object_list").prepend('<%= new_row %>');
+  
+    // show the table (if it is the first viewable object)
+    $("#object_list").removeClass("<%= HIDE_TABLE %>")
+    $("#no_object_list").remove();
+  
+  <% else %>
+    <% alert = escape_javascript(render :partial => "layouts/alert", :locals => {
+      :success => false , 
+      :text => "Booking Creation Failed."
+    }) %> 
+    $form.show(); 
+  <% end %>
+  
+  if( $("#alert").length == 0 ){
+    $("#new_object_opener").after('<%= alert %>');
+  }else{
+    $("#alert").replaceWith('<%= alert %>');
+  }
+  
+  
+  
+  $(".datepicker").datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose : true 
+  });
+  
+   
+  
+  
+});

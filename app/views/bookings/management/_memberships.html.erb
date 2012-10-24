@@ -1,0 +1,35 @@
+<%= render "projects/management/heading", title: "Project Member", :id => "project_memberships" %>
+<div class="padded">
+  
+  <div class="row"> 
+    <div class='span7' id="package_detail_wrapper">
+      
+      <% if @project.project_memberships.count == 0 %>
+        <div class="slate">
+          <div class="slate-content">
+            <div class="box-left">
+              <%= image_tag "clipboard.png" %>
+            </div>
+
+            <div class="box-right">
+              <h3>The Project doesn't have any members yet.</h3> 
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <%= render "projects/management/tables"  %> 
+      <% end %>
+        
+      
+    </div>
+    <div class='span1'>
+      <% if current_user.has_role?(:head_project_manager)%>
+        <%= link_to "Edit", project_project_memberships_url(@project), :class => 'btn blue', :style => 'width:100%; text-align:center;' %> 
+      <% else %>
+        <span class="label blue">Head Project Manager</span>
+      <% end %>
+    </div>
+  </div>
+  
+  
+</div>

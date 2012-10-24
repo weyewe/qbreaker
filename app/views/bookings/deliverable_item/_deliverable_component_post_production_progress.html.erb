@@ -1,0 +1,19 @@
+<tr>
+<td><%= link_to deliverable_component.name,
+  deliverable_component_subcription_drafts_url( deliverable_component )%></td>
+
+<% if deliverable_component_subcription.is_post_production_started == false%>
+  <td colspan='5' style="text-align:center;">
+    <span class="label red">Not Started</span>
+  </td>
+<% else %>
+  <td>
+    <!-- Progress --> 
+  </td>   
+  <td>QC Approval</td>
+  <td>Internal Deadline</td>
+  <td>Client Approval</td> 
+  <td>Client Deadline</td>
+<% end %>
+
+</tr>

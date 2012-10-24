@@ -1,0 +1,32 @@
+<div class="padded">
+  <table class="table table-bordered table-striped table-header">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Is Assigned?</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+      <% USER_ROLE.each do |key,value| %>
+        <% role = Role.find_by_name value %>
+        <%= render :partial => 'offices/role_entry', :locals => {
+          :role => role, 
+          :employee => @employee
+        }%>
+        
+        
+      <% end %>
+       
+    </tbody>
+  </table>
+</div>
+
+<div class=" hidden" id="checkbox_form_wrapper">
+  <%= form_for Assignment.new, :url => assign_role_for_employee_url,  :method => :post   do |f| %>
+    <%= hidden_field_tag 'membership_provider' , ''  %>
+    <%= hidden_field_tag 'membership_consumer', '' %>
+    <%= hidden_field_tag 'membership_decision', '' %>
+  <% end %>
+</div>

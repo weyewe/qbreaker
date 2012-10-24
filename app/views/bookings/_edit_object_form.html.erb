@@ -1,0 +1,58 @@
+<%= simple_form_for( object, :url => url,
+      :method => :put , 
+      :html => {:class => "form-horizontal prevent_double_submit ajax-form   form_content",
+                :id => id }) do |f| %>
+
+  <%= f.input :title  , :input_html => {:class => "input-xlarge span5"}, 
+  :label => "Title" %>
+  
+  <%= f.input :package_id, :hint => "Select Package", :label => "Package" do %>
+     <%= f.select :package_id, 
+         Package.all_selectable_packages %>
+   <% end %>
+   
+  <hr />  
+  <%= f.input :external_deadline , :as => :string, 
+    :input_html => {:class => "input-xlarge datepicker span5", :rows => 5,
+      :value => format_date_from_datetime( object.external_deadline)}, 
+    :label => "External Deadline", :hint => "(format: dd/mm/yyyy)"   %>
+    
+  <%= f.input :internal_deadline , :as => :string, 
+    :input_html => {:class => "input-xlarge datepicker span5", :rows => 5,
+      :value => format_date_from_datetime( object.internal_deadline)}, 
+    :label => "Internal Deadline", :hint => "(format: dd/mm/yyyy)"   %>
+  
+  
+  
+  <hr /> 
+  <%= f.input :shoot_location  , :input_html => {:class => "input-xlarge span5"}, 
+  :label => "Shoot Location" %>
+  <hr />
+  <%= f.input :is_fixed_date  , :input_html => {:class => "input-xlarge span5"}, 
+  :label => "Is Fixed Date?" %>
+  
+  <%= f.input :shoot_date , :as => :string, 
+    :input_html => {:class => "input-xlarge datepicker span5", :rows => 5,
+      :value => format_date_from_datetime( object.shoot_date)}, 
+    :label => "Shoot Date", :hint => "(format: dd/mm/yyyy)"   %>
+    
+  <%= f.input :shoot_start_date , :as => :string, 
+    :input_html => {:class => "input-xlarge datepicker span5", :rows => 5,
+      :value => format_date_from_datetime( object.shoot_start_date)}, 
+    :label => "Shoot Start Date", :hint => "(format: dd/mm/yyyy)"   %>
+    
+  <%= f.input :shoot_end_date , :as => :string, 
+    :input_html => {:class => "input-xlarge datepicker span5", :rows => 5,
+      :value => format_date_from_datetime( object.shoot_end_date)}, 
+    :label => "Shoot End Date", :hint => "(format: dd/mm/yyyy)"   %>
+  
+  
+  <%#= f.input :package_id, :hint => "Select Package", :label => "Package" do %>
+     <%#= f.select :package_id, 
+         Package.all_selectable_packages %>
+   <%# end %>
+
+  <div class="form-actions">
+    <%= f.button :submit , :class => "btn btn-primary", :value=> "Update Project" %>
+  </div>
+<% end %>

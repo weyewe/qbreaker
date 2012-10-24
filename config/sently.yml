@@ -1,0 +1,3 @@
+auth:
+  username     : 'your sently username in production mode'  
+  password  :  ' your sently password in production mode'

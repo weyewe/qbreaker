@@ -1,0 +1,11 @@
+<%= simple_form_for( project, :url => finalize_concept_url,
+      :method => :post , 
+      :html => {:class => "form-horizontal prevent_double_submit ajax-form" ,
+        :id => "finalizer"}) do |f| %>
+
+ 
+        <%= hidden_field_tag 'entity_id' , project.id  %>
+  <div class="form-actions">
+    <%= f.button :submit , :class => "btn green", :value=> "Finalize Project Concept" %>
+  </div>
+<% end %>

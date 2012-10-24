@@ -1,0 +1,59 @@
+<table class="table table-bordered table-striped table-header form_content" id='project_detail'>
+  <thead>
+    <th colspan='2' style='text-align:center;'>
+      <%= project.title %>
+    </th>
+  <thead>
+
+  <tbody>
+    <tr>
+      <td class='project-detail-metric'>Package</td>
+      <td><%= project.package.title  %></td>
+    </tr>
+    
+    <tr>
+      <td class='project-detail-metric'>External Deadline</td>
+      <td><%= format_date_from_datetime(project.external_deadline) %></td>
+    </tr>
+    
+    <tr>
+      <td class='project-detail-metric'>Internal Deadline</td>
+      <td><%= format_date_from_datetime(project.internal_deadline) %></td>
+    </tr> 
+
+    
+    <tr>
+      <td class='project-detail-metric'>Shoot Location</td>
+      <td><%= project.shoot_location %></td>
+    </tr>
+    
+    <tr>
+      <td class='project-detail-metric'>Fixed Date?</td>
+      <td>
+        <% if project.is_fixed_date == true %>
+          <span class="label green">YES</span>
+        <% else %>
+          <span class="label red">NO</span>
+        <% end %>
+      </td>
+    </tr>
+    
+    
+    
+    <tr>
+      <td class='project-detail-metric' style="width:50%; text-align:right;">Shoot Date</td>
+      <td><%= format_date_from_datetime(project.shoot_date) %></td>
+    </tr>
+    
+    <tr>
+      <td class='project-detail-metric'>Shoot Start Date</td>
+      <td><%= format_date_from_datetime(project.shoot_start_date) %></td>
+    </tr>
+    <tr>
+      <td class='project-detail-metric'>Shoot End Date</td>
+      <td><%= format_date_from_datetime(project.shoot_end_date) %></td>
+    </tr>
+    
+    
+  </tbody>
+</table>

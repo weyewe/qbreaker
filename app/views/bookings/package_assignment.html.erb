@@ -1,0 +1,48 @@
+<div class="padded">
+  
+  <%= render :partial => "layouts/new_object_opener", :locals => {
+    :text => "Package Assignment"
+  } %>
+  
+  
+   
+  <% if @project.package_id.nil? %>
+    <%= render :partial => "layouts/no_object_list", :locals => {
+      :objects => "packages",
+      :single_object => "package" , 
+      :subject => "project"
+    } %>
+  <% end %>
+   
+   
+  <%= render :partial => "projects/package_assignment/new_package_assignment_form", :locals => {
+    :new_object => @new_package,
+    :url => packages_url  
+  }%>
+ 
+  
+  
+  
+  
+  
+  
+  
+    <table class="table table-bordered table-striped table-header <%= show_table?( @packages )%>" id="object_list">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Total Projects</th>
+          <th>Deliverables</th> 
+        </tr>
+      </thead>
+      <tbody id="package_list">
+        <% @packages.each do |package| %>
+          <%= render :partial => "packages/object_list_entry", :locals => {
+            :object => package 
+          }%>
+        
+        <% end %> 
+      </tbody>
+    </table>
+</div>

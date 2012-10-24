@@ -1,0 +1,77 @@
+
+td.project-detail-metric { 
+  text-align:right;
+  width: 50%;
+  font-weight:bold;
+}
+
+form.no_content_form { 
+  margin-top: 5px;
+  border: 1px solid rgb(230, 230, 230 );
+  background-color: #fff9e8;
+  padding: 20px;
+  display:none; 
+}
+
+form.form_content, div.content_display {  
+  border: 1px solid rgb(230, 230, 230 );
+  background-color: #fff9e8;
+  padding: 20px;
+  display:none; 
+}
+
+div.content_display {
+  margin-top: 20px; 
+  display: inline;
+} 
+
+.breadcrumb {
+  border-top: 0px;
+}
+
+
+.new_object  { 
+  margin-top: 10px;
+}
+
+.form_hidden { 
+  display : none; 
+}
+
+.object_list_hidden {
+  display: none; 
+}
+
+#object_list{
+  margin-top: 10px;
+}
+ 
+#no_object_list { 
+  margin-top: 10px;
+  margin-bottom: 10px; 
+}
+
+#project_detail_wrapper .new_object {
+margin-top: 0;
+}
+
+div.finalize { 
+margin-top:10px;
+}
+
+span.strikethrough { 
+  text-decoration :line-through;
+}
+
+ul.color-code-notification li { margin-bottom: 5px;}
+span.bold { font-weight: bold; }
+ul.deliverable_summary { margin-left: 5px;}
+ul.deliverable_summary li { list-style:none ;  margin-bottom:4px;}
+
+.activity-line .title {
+  overflow: visible; 
+  white-space: normal;
+}
+
+.btn {cursor:pointer;}
+.header {height: 80px;}

@@ -1,0 +1,54 @@
+<%= render "projects/management/heading", title: "Concept", :id => "concept" %>
+
+<div class="padded">
+
+  
+  <% if @project.is_concept_finalized == true %>
+    <span class="label green">Finalized</span>
+  <% else %>
+    <% if not @project.concept.nil? and  @project.concept.length != 0 %>
+      <span class="label orange">In Progress</span>
+    <% else %>
+      <span class="label">Not Started</span>
+    <% end %>
+  <% end %>
+  
+  <div class="row"> 
+    
+    
+    <% if not @project.concept.nil? and  @project.concept.length != 0 %>
+      <div class='span7 content_display' style="line-height: 24px;" >  
+        <%= @project.concept.html_safe  %>   
+      </div>
+    <% else %>
+     <div class="slate span7">
+        <div class="slate-content">
+          <div class="box-left">
+            <%= image_tag "clipboard.png" %>
+          </div>
+
+          <div class="box-right">
+            <h3>Your project doesn't have any concept yet.</h3>  
+          </div>
+        </div>
+      </div> 
+    <% end %>
+
+    
+       
+
+
+    <div class='span1'>
+      <% if current_user.has_role?(:main_crew)%>
+        <%= link_to "Edit", project_project_memberships_url(@project), :class => 'btn blue', :style => 'width:100%; text-align:center;' %> 
+      <% else %>
+        <span class="label blue">Main Crew</span>
+      <% end %>
+      
+  
+      
+      
+    </div>
+  </div>
+ 
+</div>

@@ -1,0 +1,32 @@
+<h6>
+  <% if deliverable_item.is_basic_deliverable == true %>
+    <span class='label'>Basic</span>
+  <% else %>
+    <span class='label green'>Extra</span>
+  <% end %>
+  <%= deliverable_item.deliverable.name %>
+</h6>
+
+<table class="table table-bordered table-striped table-header">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Progress</th>   
+      <th>QC Approval</th>
+      <th>Draft Deadline</th>
+      <th>Client Approval</th> 
+      <th>Client Deadline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% deliverable_item.deliverable_component_subcriptions.order("created_at DESC").each do |deliverable_component_subcription| %>
+      <%= render :partial => "projects/deliverable_item/deliverable_component_progress", :locals => {
+        :deliverable_component => deliverable_component_subcription.deliverable_component, 
+        :deliverable_component_subcription => deliverable_component_subcription,
+        :deliverable_item => deliverable_item 
+      }%>
+     
+    <% end %> 
+
+  </tbody>
+</table>

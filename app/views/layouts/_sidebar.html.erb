@@ -1,0 +1,32 @@
+<div id="sidebar" class="span3 sidebar-right">
+ 
+  <% if current_user %>
+    <ul class="nav inset-margin">
+      <li>
+        <a class="btn blue" href="#"><i class="icon-plus"></i> New project</a>
+      </li>
+
+      <li>
+        <a class="btn green" href="#"><i class="icon-pencil"></i> Edit project</a>
+      </li>
+    </ul> 
+
+
+    <%= get_process_nav(:status, params).html_safe %> 
+
+    <% if current_user.has_role?(:admin) %>
+      <%= get_process_nav(:master, params).html_safe %>  
+      <%= get_process_nav(:employee, params).html_safe %> 
+    <% end %>
+  <% else %>
+    <ul class="nav inset-margin">
+      <li>
+        <a class="btn blue" href="#"><i class="icon-plus"></i>Queue Management</a>
+      </li>
+ 
+    </ul>
+    
+  <% end %>
+  
+
+</div>

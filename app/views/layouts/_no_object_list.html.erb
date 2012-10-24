@@ -1,0 +1,20 @@
+ 
+<div class="slate" id="no_object_list">
+  <div class="slate-content">
+    <div class="box-left">
+      <%= image_tag "clipboard.png" %>
+    </div>
+
+    <div class="box-right">
+      <h3>Your <%= subject %> doesn't have any <%= objects %> yet.</h3>
+      <div class="text">
+      </div>
+      <!-- <a href="#">Learn more about project tasks</a> -->
+      <% if not single_object.nil? %>
+        <span class="btn blue btn-slate-action form_opener">
+            <i class="icon-plus-sign"></i> Add <%= single_object %>!
+        </span><br /> 
+      <% end %>
+    </div>
+  </div>
+</div>

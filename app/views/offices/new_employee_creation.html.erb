@@ -1,0 +1,44 @@
+<div class="padded">
+  
+  <%= render :partial => "layouts/new_object_opener", :locals => {
+    :text => "New Employee"
+  } %>
+  
+  <% if @employees.length == 0 %>
+    <%= render :partial => "layouts/no_object_list", :locals => {
+      :objects => "packages",
+      :single_object => "package" ,
+      :subject => "company"
+    } %>
+  <% end %>
+  
+   
+  <%= render :partial => "offices/new_employee_form", :locals => {
+    :new_object => @new_employee,
+    :url => create_employee_url  
+  }%>
+ 
+  
+  
+  
+  
+  
+  <table class="table table-bordered table-striped table-header" id="object_list">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Admin</th>
+        <th>Head PM</th>
+        <th>Employee</th> 
+      </tr>
+    </thead>
+    <tbody id="employee_list">
+      <% @employees.each do |employee| %>
+        <%= render :partial => "offices/employee_list_entry", :locals => {
+          :object => employee 
+        }%>
+        
+      <% end %> 
+    </tbody>
+  </table>
+</div>

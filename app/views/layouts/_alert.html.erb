@@ -1,0 +1,13 @@
+
+<% if success == true %>
+  <% alert_class = 'success' %>
+  <% icon_class = 'icon-ok-sign' %>
+<% else %>
+  <% alert_class = 'error' %>
+  <% icon_class = 'icon-exclamation-sign' %>
+<% end %>
+
+
+<div  id='alert' class="alert new_object alert-<%= alert_class %>">
+  <i class="<%= icon_class %>"></i> <%= text %>
+</div>

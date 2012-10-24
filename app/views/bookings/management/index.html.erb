@@ -1,0 +1,44 @@
+
+<!-- project detail -->
+<%= render "typography" %>
+
+<!-- client -->
+<%= render "client" %>
+
+
+<!-- deliverables -->
+<%= render "deliverable" %>
+
+<!-- project membership -->
+<%= render "heading", title: "Project Member", :id => "project_memberships" %>
+<div class="padded">
+  <%= render "tables" %>
+  <%= render "buttons" %>
+</div>
+
+<!-- concept -->
+<%= render "layout"  %>
+
+<!-- property -->
+<%= render "property"  %>
+
+
+
+
+<!-- production -->
+<%= render "alerts" %>
+<!-- post-production -->
+<%= render "comments" %>
+
+
+<%= render "blank_slate" %>
+<%= render "activity" %>
+<%= render "navigation" %>
+<%= render "pagination" %>
+<%= render "accordion" %>
+
+<%= render "heading", title: "Modal window", :id=>"modal_window" %>
+
+<div class="padded">
+  <a class="btn" data-toggle="modal" href="#modal" >Launch Modal</a>
+</div>

@@ -1,0 +1,12 @@
+<tr id="role_entry_<%= role.id %>">
+  <td>
+    <%= role.name %>
+  </td>
+  <td>
+    <% checkbox_value = employee.has_role?(role.name.underscore.to_sym) %>
+
+    <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+        checkbox_value, :class => 'checkbox_tracker', 
+        :id => "provider_#{role.id}-consumer_#{employee.id}" %> OK
+  </td>
+</tr>

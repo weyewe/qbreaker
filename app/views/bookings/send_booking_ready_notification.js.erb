@@ -1,0 +1,15 @@
+$(document).ready(function(){
+ 
+  <% new_row = escape_javascript(  render :partial => "bookings/object_list_entry", :locals => { 
+    :object => @object
+    }) %>
+  
+  
+   
+   var $row = $("#object_list_entry-<%= @object.id %>");
+   $row.hideLoading(); 
+   
+   $row.replaceWith('<%=  new_row %>');
+  
+  
+});

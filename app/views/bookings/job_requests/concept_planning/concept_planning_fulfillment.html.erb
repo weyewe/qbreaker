@@ -1,0 +1,68 @@
+
+<% content_for :additional_js do %>
+  <%= javascript_include_tag "project_summary", "wysihtml5-0.3.0_rc2.min", "bootstrap-wysihtml5-0.0.2.min" %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.wysihtml5_textarea').wysihtml5({
+      	"html": false, //Button which allows you to edit the generated HTML. Default false
+      	"image": false //Button to insert an image. Default true
+      }); 
+    });
+  </script>
+<% end %>
+
+<% content_for :additional_css do %>
+  <%= stylesheet_link_tag "bootstrap-wysihtml5-0.0.2" %>
+<% end %>
+
+
+
+
+
+
+<div class="padded">
+  
+  
+  <% if @project.is_concept_finalized == true %>
+     <%= render :partial => "projects/job_requests/concept_planning/concept_finalized", :locals => {
+       :project => @project 
+     }%>
+   <% else %>
+     <%= render :partial => "projects/job_requests/concept_planning/finalize_concept", :locals => {
+       :project => @project 
+     }%>
+   <% end %>
+   
+  <% if  current_user.has_project_role_symbol?(@project, :main_crew )%>
+    <%= render :partial => "layouts/new_object_opener", :locals => {
+      :text => "Edit Concept"
+    } %>
+  <% end %>
+  
+  
+  
+ 
+  
+  
+   
+  <% if @project.concept.nil? or @project.concept.length == 0 %>
+    <%= render :partial => "layouts/no_object_list", :locals => {
+      :objects => "concept ",
+      :single_object => "concept" , 
+      :subject => "project \"#{@project.title}\""
+    } %>
+  <% else %>
+    <%= render :partial => "projects/job_requests/concept_planning/display", :locals => {
+      :project => @project 
+    } %>
+  <% end %>
+   
+   
+  <% if  current_user.has_project_role_symbol?(@project, :main_crew)%>
+    <%= render :partial => "projects/job_requests/concept_planning/object_form", :locals => {
+      :object => @project,
+      :url => update_project_concept_url(@project )  
+    }%>
+  <% end %>
+   
+</div>

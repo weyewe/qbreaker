@@ -1,0 +1,70 @@
+<% content_for :additional_mini_app_nav do %>
+  <%= render :partial => 'layouts/mini_app_nav' %>
+<% end %>
+
+
+
+<% content_for :additional_js do %>
+  <%= javascript_include_tag "project_summary", "wysihtml5-0.3.0_rc2.min", "bootstrap-wysihtml5-0.0.2.min" %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.wysihtml5_textarea').wysihtml5({
+      	"html": false, //Button which allows you to edit the generated HTML. Default false
+      	"image": false //Button to insert an image. Default true
+      }); 
+    });
+  </script>
+<% end %>
+
+<% content_for :additional_css do %>
+  <%= stylesheet_link_tag "bootstrap-wysihtml5-0.0.2" %>
+<% end %>
+
+
+
+ 
+
+<!-- project detail -->
+<%= render "projects/management/detail" %>
+
+<!-- client -->
+<%#= render "projects/management/client" %>
+
+
+<!-- deliverables -->
+<%= render "projects/management/deliverable" %>
+
+<!-- project membership -->
+<%= render "projects/management/memberships" %>
+
+
+<!-- concept -->
+<%= render "projects/management/concept"  %>
+
+<!-- property -->
+<%#= render "projects/management/property"  %>
+
+
+
+<%= render "projects/management/data"  %>
+
+
+<!-- production -->
+<%= render "projects/management/production" %>
+<!-- post-production -->
+<%= render "projects/management/post_production" %>
+
+
+<%#= render "projects/management/blank_slate" %>
+<%#= render "projects/management/activity" %>
+<%#= render "projects/management/navigation" %>
+<%#= render "projects/management/pagination" %>
+<%#= render "projects/management/accordion" %>
+
+<%#= render "projects/management/heading", title: "Modal window", :id=>"modal_window" %>
+
+<!-- <div class="padded">
+  <a class="btn" data-toggle="modal" href="#modal" >Launch Modal</a>
+</div> -->
+
+

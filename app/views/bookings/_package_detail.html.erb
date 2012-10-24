@@ -1,0 +1,50 @@
+<table class="table table-bordered table-striped table-header form_content" id='package_detail'>
+  <thead>
+     
+    <tr>
+      <th>
+        Deliverable
+      </th>
+      <th>
+        Status
+      </th>
+      <th>
+        Sub Item Name
+      </th>
+      <th>
+        Sub Item Quantity
+      </th>
+      
+    </tr>
+  <thead>
+
+  <tbody>
+    <% project.active_deliverable_items.each do |deliverable_item| %>
+      <tr>
+        <td><%= deliverable_item.deliverable.name %></td>
+        <td>
+          <% if deliverable_item.is_basic_deliverable? %>
+            <span class="label">Basic</span>
+          <% else %>
+            <span class="label green">Extra</span>
+          <% end %>
+          
+          <%= deliverable_item.project_specific_description %>
+        </td>
+        
+        <% if deliverable_item.deliverable.has_sub_item? %> 
+          <td><%= deliverable_item.deliverable.name %></td>
+          <td><%= deliverable_item.sub_item_quantity %></td>
+        <% else %>
+          <td colspan='2' style="text-align:center; ">
+            <span class="label red">No Sub Item</span>
+          </td>
+        <% end %>
+        
+      </tr>
+    <% end %>
+    
+     
+    
+  </tbody>
+</table>

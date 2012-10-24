@@ -1,0 +1,14 @@
+<%= simple_form_for( object, :url => url,
+      :method => :post , 
+      :html => {:class => "form-horizontal prevent_double_submit ajax-form   no_content_form",
+        :id => "object_form"}) do |f| %>
+
+  <%= f.input :shoot_data  , :input_html => {:class => "input-xlarge span5 wysihtml5_textarea", :rows => 5 }, 
+  :label => "Shoot Data", :hint => "e.g. : total raw files, total proect files" %>
+   
+   
+   <hr /> 
+  <div class="form-actions">
+    <%= f.button :submit , :class => "btn btn-primary", :value=> "Update Shoot Data" %>
+  </div>
+<% end %>

@@ -1,0 +1,78 @@
+<tr>
+<td>
+  <!--  can be accessed from task or project details -->
+  <% if params[:action] == 'project_deliverable_items_production_overview' %>
+    <%= link_to deliverable_component.name,
+      deliverable_component_subcription_drafts_url( deliverable_component )%>
+  <% elsif params[:action] == 'task_based_deliverable_items_progress' %>
+    <%= link_to deliverable_component.name,
+      task_based_draft_creation_for_component_url( deliverable_component )%>
+  <% end %>
+</td>
+
+<% if deliverable_component_subcription.drafts.count == 0 %>
+  <td colspan='5' style="text-align:center;">
+    <span class="label red">Not Started</span>
+  </td>
+<% else %>
+  <% last_draft = deliverable_component_subcription.last_draft %>
+  <!--  Draft Status -->
+  <td>
+    <% if last_draft.is_finished == false  %>
+      <span class='label orange'>Draft <%= last_draft.number %></span>
+    <% else %>
+      <span class='label green'>Draft <%= last_draft.number %></span>
+    <% end %>
+  </td>   
+  
+  
+  <!-- QC Approval  -->
+  <td> 
+    <% if last_draft.is_production_declare_finish == false %>
+      <span class="label red">NA</span>
+    <% else %>
+      <% if  last_draft.is_qc_approved == false  %>
+        <span class='label orange'>Pending</span>
+      <% else %>
+        <span class='label green'>OK</span>
+      <% end %>
+    <% end %>
+    
+  </td>
+  <!-- internal Deadline to be finished, passed to QC -->
+  <td> 
+    <% if  last_draft.deadline_date.nil?   %>
+      <span class='label red'>NA</span>
+    <% else %>
+      <span class='label'><%= format_date_from_datetime( last_draft.deadline_date ) %></span>
+    <% end %>
+  </td>
+  
+  <!-- Client Approval status  -->
+  <td> 
+    <% if last_draft.is_draft_passed_for_review == false %>
+      <span class='label red'>NA</span>
+    <% else %>
+      <% if last_draft.is_client_approved == false %>
+        <span class='label orange'>Pending</span>
+      <% else %>
+        <span class='label green'>YES</span>
+      <% end %>
+    <% end %>
+  </td> 
+  
+  <!-- internal client deadline  -->
+  <td> 
+    <% if last_draft.is_client_approved == true %>
+      <span class='label green'>OK</span>
+    <% else %>
+      <% if last_draft.client_approval_deadline_date.nil?  %>
+        <span class='label red'>NA</span>
+      <% else %>
+        <span class='label orange'><%= format_date_from_datetime( last_draft.client_approval_deadline_date ) %></span>
+      <% end %>
+    <% end %>
+  </td>
+<% end %>
+
+</tr>

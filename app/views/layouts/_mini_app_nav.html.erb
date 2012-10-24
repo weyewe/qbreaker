@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="span9">
+    
+    <% 
+        tab_array = [
+          {
+            :tab_text => "Summary",
+            :icon_class => 'icon-dashboard',
+            :destination_url => project_url(@project), 
+            :conditions => [
+              {
+                :controller => 'projects',
+                :action => 'show'
+              }
+            ]
+          },
+          {
+            :tab_text => 'Deliverable',
+            :icon_class => '',
+            :destination_url => project_deliverable_items_url(@project) , 
+            :conditions => [
+              {
+                :controller => 'deliverable_items',
+                :action => 'index'
+              }
+            ]
+          },
+          {
+            :tab_text => 'Membership',
+            :icon_class => '',
+            :destination_url => project_project_memberships_url(@project) , 
+            :conditions => [
+              {
+                :controller => 'project_memberships',
+                :action => 'index'
+              }
+            ]
+          },
+          {
+            :tab_text => 'Concept',
+            :icon_class => '',
+            :destination_url => project_based_concept_planning_fulfillment_url(@project) , 
+            :conditions => [
+              {
+                :controller => 'projects',
+                :action => 'project_based_concept_planning_fulfillment'
+              }
+            ]
+          },
+          {
+            :tab_text => 'Data',
+            :icon_class => '',
+            :destination_url => project_based_shoot_finalization_url(@project) , 
+            :conditions => [
+              {
+                :controller => 'projects',
+                :action => 'project_based_shoot_finalization'
+              }
+            ]
+          },
+          {
+            :tab_text => 'Production',
+            :icon_class => '',
+            :destination_url => project_deliverable_items_production_overview_url(@project) , 
+            :conditions => [
+              {
+                :controller => 'deliverable_items',
+                :action => 'project_deliverable_items_production_overview'
+              },
+              {
+                :controller => 'drafts',
+                :action => 'index'
+              },
+              {
+                :controller => "drafts",
+                :action => 'production_team_assignment'
+              },
+              {
+                :controller => 'drafts',
+                :action => 'internal_qc_deadline_assignment'
+              }
+            ]
+          },
+          {
+            :tab_text => 'Post Production',
+            :icon_class => '',
+            :destination_url => project_deliverable_items_url(@project) , 
+            :conditions => [
+              {
+                :controller => '',
+                :action => ''
+              }
+            ]
+          }
+        ]
+    %>
+    
+    <%= render_project_mini_app_nav( tab_array, params).html_safe %>
+    <!-- <ul class="nav nav-tabs header-tabs btn-block pull-right">
+         <% if params[:controller] == 'projects' && params[:action] == 'show'%>
+           <li class="active">
+             <%= link_to project_url(@project)  do %>
+               <i class="icon-dashboard"></i> Summary
+             <% end %>
+           </li>
+             
+         <% else %>
+           <li>
+             <%= link_to project_url(@project)  do %>
+               <i class="icon-dashboard"></i> Summary
+             <% end %>
+           </li>
+         <% end %>
+         
+         
+         <li><%= link_to "Deliverable", project_deliverable_items_url(@project) %></li> 
+         <li><%= link_to "Membership", project_project_memberships_url(@project) %></li>
+         <li><%= link_to "Concept", '#concept' %></li>
+         <li><%= link_to "Data", register_path %></li>
+         <li><%= link_to "Production", '#production' %></li>
+         <li><%= link_to "Post Production", '#post_production' %></li> 
+       </ul> -->
+  </div>
+</div>

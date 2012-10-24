@@ -1,0 +1,56 @@
+$(document).ready(function(){
+  var $form = $("#edit_project_detail");  
+  <% new_form = escape_javascript(  render :partial => "projects/edit_object_form", :locals => {
+    :object => @project, 
+    :url => project_url(@project),
+    :id => 'edit_project_detail'
+  })%>
+  
+  //  hide showLoading 
+  $form.hideLoading();  
+  $form.replaceWith('<%= new_form %>');  
+  var $form = $("#edit_project_detail");  
+  
+  // show the alert (either success or fail)
+  var $form_opener = $("#new_object_opener");
+   
+  <% if @has_no_errors == true   %>
+  // show notification that it is persisted
+    <% alert = escape_javascript(render :partial => "layouts/alert", :locals => {
+      :success => true , 
+      :text => "#{@project.title} is successfully updated."
+    }) %>
+  //  hide the form 
+    $form.hide(); 
+    <% new_table  = escape_javascript( render :partial => "projects/project_detail", :locals => {
+      :project => @project 
+    })%> 
+ 
+    $("#project_detail").replaceWith('<%=  new_table %>');
+  
+  <% else %>
+   
+    <% alert = escape_javascript(render :partial => "layouts/alert", :locals => {
+      :success => false , 
+      :text => "Project Update Failed."
+    }) %> 
+    $form.show(); 
+  <% end %>
+  
+  if( $("#alert").length == 0 ){
+    $("#project_detail_wrapper").prepend('<%= alert %>');
+  }else{
+    $("#alert").replaceWith('<%= alert %>');
+  }
+  
+  
+  
+  $(".datepicker").datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose : true 
+  });
+  
+   
+  
+  
+});

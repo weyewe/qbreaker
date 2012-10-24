@@ -1,0 +1,3 @@
+auth:
+  username     : 'your sently username in development mode'
+  password  : 'your sently password in development mode'

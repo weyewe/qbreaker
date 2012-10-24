@@ -1,0 +1,24 @@
+<%= render "projects/management/heading", title: "Deliverables", :id => "deliverable" %>
+
+<div class="padded">
+  
+    <div class="row"> 
+      <div class='span7' id="package_detail_wrapper">
+        
+        <%= render :partial => "projects/package_detail", :locals => {
+          :package => @project.package,
+          :project => @project
+        }%>
+        
+        
+      </div>
+      <div class='span1'>
+        <% if current_user.has_role?(:head_project_manager) %>
+          <%= link_to "Edit", project_deliverable_items_url(@project), :class => 'btn blue', :style => 'width:100%; text-align:center;' %> 
+        <% else %>
+          <span class="label blue">Head Project Manager</span>
+        <% end %>
+      </div>
+    </div>
+
+</div>

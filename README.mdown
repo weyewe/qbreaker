@@ -9,37 +9,46 @@ Get this application working:
 
 Make sure that the android can send sms. I couldn't use my Galaxy Tab II since it can't send any SMS. 
 
+
 2. Create an account in Sent.ly (they give 100 SMS credit)
 
 3. Install the sent.ly application for android (downloadable from Google Play)
 
 https://play.google.com/store/apps/details?id=io.modem&feature=search_result#?t=W251bGwsMSwxLDEsImlvLm1vZGVtIl0.
 
+
 4. Open the Sent.ly application in Android. Key in the email and password corresponding to the registered account in [2]. 
 
 
 ################ Heroku Part
+
 
 1. Go to the qBreaker folder in your machine and create the heroku app
 
 $ heroku create --stack cedar
 $ git push heroku master
 
+
 2. Do the database migration and feed seed data
 
 $ heroku run rake db:migrate
 $ heroku run rake db:seed
 
+
 3. rename the heroku app if you want 
 
 $ heroku apps:rename myappname
 
+
 4. Add heroku worker  (we need to send the SMS in the background)
+
 heroku ps:scale worker=1 
+
 
 5. Create the heroku Pusher add on (yeah, real time data update if you have a big screen to display the queue progress)
 
 Follow this: https://devcenter.heroku.com/articles/pusher
 You need to go to development.rb , to change the Pusher's authentication. 
+
 
 6. That's it! You are ready to take customer's contact and send notification 
